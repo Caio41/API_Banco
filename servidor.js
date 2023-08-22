@@ -63,7 +63,7 @@ app.get('/', (req,res) => {
 
     client.connect()
 
-    client.query("Select * from usuario", (error,ress) => {
+    client.query("SELECT * FROM usuario", (error,ress) => {
     if(!error){
         res.send(JSON.stringify(ress.rows))
     } else {

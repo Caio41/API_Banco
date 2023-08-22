@@ -13,8 +13,12 @@ document.getElementById("submitId").onclick = async function(event){
     //alert(nasc)
 }
 
-document.getElementById("mybtn").onclick = async function(){
 
+
+
+document.getElementById("submitBuscaId").onclick = async function(){
+    var cpf_procurado = document.getElementById("buscaCpfId").value
+    var usuarios = []
     await fetch("http://localhost:8080").then(res => res.json()).then(data => {
         var tabela = document.getElementById("tabela")
         var cabecalho = document.getElementById("cabecalho")
@@ -27,17 +31,27 @@ document.getElementById("mybtn").onclick = async function(){
                                <td style="text-align: end"><b>NASCIMENTO</b></td>
                                </tr>`
         data.forEach(element => {
-            console.log(element.cpf,element.nome,element.data_nascimento)
-            
-            tabela.innerHTML += `<tr>
-                                 <td>${element.cpf}</td>
-                                 <td>${element.nome}</td>
-                                 <td>${element.data_nascimento}</td>
-                                 </tr>`
+            if(element.cpf == cpf_procurado){
+                usuarios.push(element)
+            }
+           
         });
+
+        if(usuarios.length==0){
+            console.log("não encontrado")
+            tabela.innerHTML += "Usuário não encontrado"
+        } else {
+            tabela.innerHTML += `<tr>
+                             <td>${usuarios[0].cpf}</td>
+                             <td>${usuarios[0].nome}</td>
+                             <td>${usuarios[0].data_nascimento}</td>
+                             </tr>`
+        }
     })
 
 
 }
+
+
 
 //element.cpf + ' ' + element.nome + ' ' + element.data_nascimento + '<br>'
